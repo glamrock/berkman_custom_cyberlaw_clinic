@@ -1,4 +1,4 @@
-<?php 
+<?php
 function add_fullwidth_footer() {
     $args = array(
         'name'          => 'Full Width Footer',
@@ -250,8 +250,8 @@ function custom_post_shortcode($atts) {
         );
     }
     $my_query = new WP_Query($args);
-    if ( $my_query->have_posts() ) { 
-        while ( $my_query->have_posts() ) { 
+    if ( $my_query->have_posts() ) {
+        while ( $my_query->have_posts() ) {
             $my_query->the_post();
             $new_content = null;
 
@@ -260,12 +260,14 @@ function custom_post_shortcode($atts) {
             if (!is_null($event_type) && !empty($event_date)) {
                 switch ($event_type) {
                     case 'upcoming_event':
-                    if (strtotime($event_date) > $_SERVER['REQUEST_TIME']) {
+                    if (strtotime($event_date) > date('m/d/Y')) {
                         $new_content = get_the_content();
+                    } elseif (strtotime($event_date) == date('m/d/Y')) {
+                      $new_content = get_the_content();
                     }
                     break;
                     case 'past_event':
-                    if (strtotime($event_date) < $_SERVER['REQUEST_TIME']) {
+                    if (strtotime($event_date) < date('m/d/Y')) {
                         $new_content = get_the_content();
                     }
                     break;
@@ -274,7 +276,7 @@ function custom_post_shortcode($atts) {
                 global $more; $more=0;
                 $new_content = '<p class="custom-entry-excerpt">'.get_the_content('&rarr;').'</p>';
                 $more=1;
-            } else { 
+            } else {
                 $new_content = get_the_content();
             }
 
