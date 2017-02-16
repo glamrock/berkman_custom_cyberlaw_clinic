@@ -260,14 +260,12 @@ function custom_post_shortcode($atts) {
             if (!is_null($event_type) && !empty($event_date)) {
                 switch ($event_type) {
                     case 'upcoming_event':
-                    if (strtotime($event_date) > date('m/d/Y')) {
+                    if (strtotime($event_date) >= strtotime(date('m/d/Y'))) {
                         $new_content = get_the_content();
-                    } elseif (strtotime($event_date) == date('m/d/Y')) {
-                      $new_content = get_the_content();
                     }
                     break;
                     case 'past_event':
-                    if (strtotime($event_date) < date('m/d/Y')) {
+                    if (strtotime($event_date) < strtotime(date('m/d/Y'))) {
                         $new_content = get_the_content();
                     }
                     break;
